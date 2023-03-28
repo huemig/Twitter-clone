@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+
+<section class="post_form content">
+    <div class="header">
+        <img class="tech" src="{% static 'img/techis-logo.png' %}"/>
+        <h1>Edit</h1>
+      </div>
+      <form class="edit_form" action="/edit/{{post.id}}/" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="img-form">
+            <img class="prof" src="{% static 'img/profile.png' %}"/>
+            <input type="text" name="name" placeholder="Name"  value="{{post.name}}" required />
+        </div>
+        <textarea name="body" placeholder="Tell Us Something!" required>{{post.body}}</textarea>
+        <div class="attachments">
+            <input class="tweet" type="Submit" value="Update" />
+            <a class="cancel" href="/">Cancel</a>
+          </div>
+      </form>
+      <div class="maint">
+        <img src="{% static 'img/helmet.png' %}"/>
+        <p> More to come </p>
+        </div>
+</section>
+
+
+
+
+
+
+
+{% endblock %}

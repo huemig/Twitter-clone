@@ -1,0 +1,77 @@
+{% extends "base.html" %} {% block content %} {% load static %}
+
+<section class="content">
+  <section class="post_form">
+    <div class="header">
+      <img class="tech" src="{% static 'img/techis-logo.png' %}" />
+      <h1>Home</h1>
+    </div>
+    <form action="/" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="img-form">
+        <img class="prof" src="{% static 'img/profile.png' %}" />
+        <input type="text" name="name" placeholder="Name" required />
+      </div>
+      <div class="text-form">
+        <textarea
+          name="body"
+          placeholder="Tell us anything!"
+          required
+        ></textarea>
+      </div>
+      <div class="attachments">
+        <label class="buttonx" for="file_btn">Upload</label>
+        <input id="file_btn" type="file" name="image" />
+
+        <button class="tweet" type="Submit" value="Tweet">Submit</button>
+      </div>
+    </form>
+  </section>
+  <section class="posts">
+    {% for post in posts %}
+    <li>
+      <img class="menu_icon js-menu-icon" src="{% static 'img/dots.png' %}" />
+      <div class="menu">
+
+        <a href="/delete/{{ post.id }}">Delete</a>
+        <br>
+        <a href="/edit/{{post.id}}">Edit</a>
+      </div>
+      <div class="logo">
+        <img src="{% static 'img/profile.png' %}" />
+      </div>
+      <div class="name_body">
+        <div class="name">{{post.name}}<br /></div>
+        <div class="datetime">{{post.created_at}} <br /></div>
+        <p>{{post.body}} <br /></p>
+
+        {% if post.image.url %}
+        <img class="ifpst" src="{{post.image.url}}" />
+        {% endif %}
+      </div>
+    </li>
+      
+    
+    <div class="like">
+      <form action="{% url 'like' post.pk %}" method="Post">
+        {% csrf_token %}
+        <div class="like-btn">
+          <button type="submit">&#10084;</button>{{post.like}}
+        </div>
+  
+      </form>
+      </div>
+  
+  
+    {% endfor %}
+  </section>
+  <script
+    src="https://code.jquery.com/jquery-3.6.4.js"
+    integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+    crossorigin="anonymous"
+  ></script>
+
+  <script src="{% static 'js/posts.js' %}"></script>
+</section>
+
+{% endblock %}
